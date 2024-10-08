@@ -1,5 +1,4 @@
-﻿
-namespace Catalog.API.Products.UpdateProduct;
+﻿namespace Catalog.API.Products.UpdateProduct;
 
 public record UpdateProductCommand(Guid Id, string Name, List<string> Category, string Description, string ImageFile, decimal Price)
     : ICommand<UpdateProductResult>;
@@ -17,8 +16,7 @@ internal class UpdateProductCommandHandler
 
         if (product is null)
         {
-            ///TODO: uncomment this part
-            //throw new ProductNotFoundException();
+            throw new ProductNotFoundException();
         }
 
         product.Name = command.Name;
