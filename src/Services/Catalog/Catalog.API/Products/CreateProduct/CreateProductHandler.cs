@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Catalog.API.Products.CreateProduct;
+﻿namespace Catalog.API.Products.CreateProduct;
 
 public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
     : ICommand<CreateProductResult>;
@@ -10,16 +8,25 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 {
     public CreateProductCommandValidator()
     {
-
+        RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+        RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+        RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+        RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
     }
 }
 
-internal class CreateProductCommandHandler(IDocumentSession session) 
+internal class CreateProductCommandHandler
+    (IDocumentSession session, ILogger<CreateProductCommandHandler> logger) 
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
-        // Business logic to craete a product
+        //create Product entity from command object
+        //save to database
+        //return CreateProduct result
+
+        logger.LogInformation("CreateProductCommandHandler.Handle called with {@Command}", command);
+        
         var product = new Product
         {
             Name = command.Name,
