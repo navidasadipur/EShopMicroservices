@@ -3,7 +3,7 @@
 namespace Ordering.API.Endpoints;
 
 //public record GetOrdersByCustomerIdRequest(int CustomerId);
-public record GetOrdersByCustomerResponse(IEnumerable<OrderDto> OrderDtos);
+public record GetOrdersByCustomerResponse(IEnumerable<OrderDto> Orders);
 
 public class GetOrdersByCustomer : ICarterModule
 {
